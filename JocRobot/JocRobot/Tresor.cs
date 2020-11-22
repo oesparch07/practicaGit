@@ -20,7 +20,7 @@ namespace JocRobot
         }
         public void posicioTresor()
         {
-            tresor.Width = tresor.Height = 20;
+            tresor.Width = tresor.Height = 50;
             tresor.Fill = Brushes.Gold;
             Canvas.SetLeft(tresor, x);
             Canvas.SetTop(tresor, y);

@@ -20,7 +20,7 @@ namespace JocRobot
         }
         public void posicioRobot()
         {
-            robot.Width = robot.Height = 20;
+            robot.Width = robot.Height = 50;
             robot.Fill = Brushes.Gray;
             Canvas.SetLeft(robot, x);
             Canvas.SetTop(robot, y);
