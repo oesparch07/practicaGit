@@ -27,14 +27,7 @@ namespace JocRobot
         Random random = new Random();
         double width = 100;
         double height = 100;
-
-        int direccio = 0;
-        int left = 4;
-        int right = 6;
-        int up = 8;
-        int down = 2;
-
-        int count = 0;
+        private Direccio direccio;
 
         public MainWindow()
         {
@@ -45,6 +38,8 @@ namespace JocRobot
             capRobot.Add(new Robot(width, height));
             tresor.Add(new Tresor(random.Next(0, 37) * 10, random.Next(0, 35) * 10));
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            
+            direccio = Direccio.Down;
             timer.Tick += Timer_Tick;
         }
 
@@ -63,7 +58,38 @@ namespace JocRobot
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            
+           
+            if (direccio == Direccio.Right)
+            {
+                capRobot[0].x += 10;
+            }
+            else if (direccio == Direccio.Left)
+            {
+                capRobot[0].x -= 10;
+            }
+            else if (direccio == Direccio.Up)
+            {
+                capRobot[0].y -= 10;
+            }
+            else if (direccio == Direccio.Down)
+            {
+                capRobot[0].y += 10;
+            }
+
+            capRobot[0] = new Robot(width, height);
+            //Si el robot colisiona amb el tresor el joc acaba.
+            if (capRobot[0].x == tresor[0].x && capRobot[0].y == tresor[0].y)
+            {
+                this.Close();
+            }
+        }
+
+        public enum Direccio
+        {
+            Up,
+            Down,
+            Right,
+            Left
         }
 
         private void btnInicaJoc_Click(object sender, RoutedEventArgs e)
