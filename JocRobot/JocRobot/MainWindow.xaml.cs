@@ -28,6 +28,7 @@ namespace JocRobot
         double width = 100;
         double height = 100;
         private Direccio direccio;
+        int numMovs = 0;
 
         public MainWindow()
         {
@@ -62,18 +63,27 @@ namespace JocRobot
             if (direccio == Direccio.Right)
             {
                 capRobot[0].x += 10;
+                numMovs++;
+                txtNumMovs.Text = $"N moviments: {numMovs}";
+
             }
             else if (direccio == Direccio.Left)
             {
                 capRobot[0].x -= 10;
+                numMovs++;
+                txtNumMovs.Text = $"N moviments: {numMovs}";
             }
             else if (direccio == Direccio.Up)
             {
                 capRobot[0].y -= 10;
+                numMovs++;
+                txtNumMovs.Text = $"N moviments: {numMovs}";
             }
             else if (direccio == Direccio.Down)
             {
                 capRobot[0].y += 10;
+                numMovs++;
+                txtNumMovs.Text = $"N moviments: {numMovs}";
             }
 
             capRobot[0] = new Robot(width, height);
