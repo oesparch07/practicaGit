@@ -55,6 +55,12 @@ namespace JocRobot
 
         }
 
+        public void afeguirRobot()
+        {
+            capRobot[0].posicioRobot();
+            pantallaJoc.Children.Insert(0, capRobot[0].robot);
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             
