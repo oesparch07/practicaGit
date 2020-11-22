@@ -68,7 +68,9 @@ namespace JocRobot
 
         private void btnInicaJoc_Click(object sender, RoutedEventArgs e)
         {
-
+            afeguirRobot();
+            afeguirTresor();
+            timer.Start();
         }
     }
 }
