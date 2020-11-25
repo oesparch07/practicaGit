@@ -29,12 +29,11 @@ namespace JocRobot
         double width = 100;
         double height = 100;
 
-        private Direccio direccio;
+        private DireccioRobot direccio;
         int numMovs = 0;
         int count = 0;
-        private object threadSleep;
 
-        public Direccio Direccio1 { get => direccio; set => direccio = value; }
+        public DireccioRobot Direccio1 { get => direccio; set => direccio = value; }
 
         public MainWindow()
         {
@@ -45,6 +44,7 @@ namespace JocRobot
             capRobot.Add(new Robot(width, height));
             tresor.Add(new Tresor(random.Next(0, 37) * 10, random.Next(0, 35) * 10));
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            
 
             timer.Tick += Timer_Tick;
         }
@@ -67,13 +67,29 @@ namespace JocRobot
 
         public void moure()
         {
+            int randomMov = random.Next(0, 4);
+
+            if (randomMov == 0 || randomMov == 1)
+            {
+                direccio = DireccioRobot.Up;
+            }
+            else if (randomMov == 2)
+            {
+                direccio = DireccioRobot.Left;
+            }
+            else
+            {
+                direccio = DireccioRobot.Right;
+            }
+
             //Segons la direccio que li toca augmenta o disminueix.
-            if (direccio == Direccio.Up)
+            if (direccio == DireccioRobot.Up)
                 height -= 10;
-            if (direccio == Direccio.Left)
+            if (direccio == DireccioRobot.Left)
                 width -= 10;
-            if (direccio == Direccio.Right)
+            if (direccio == DireccioRobot.Right)
                 width += 10;
+            
 
             //Si el que hi ha a la pantalla es una ellipse l'elimina per retorna a "Pintar" la ellipse.
             for (int i = 0; i < pantallaJoc.Children.Count; i++)
@@ -91,8 +107,9 @@ namespace JocRobot
             //Cridem el mètode moure pq el robot es mogui.
             moure();
 
-            //Va imprimint el robot.
+            //Nou robot per imprimir al canvas.
             capRobot[0] = new Robot(width, height);
+
             //Si el robot colisiona amb el tresor el joc acaba.
             if (capRobot[0].x == tresor[0].x && capRobot[0].y == tresor[0].y)
             {
@@ -101,7 +118,8 @@ namespace JocRobot
             }
         }
 
-        public enum Direccio
+        //Segons la direccio es moura cap un costat o l'altre.
+        public enum DireccioRobot
         {
             Up,
             Right,
