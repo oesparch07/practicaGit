@@ -77,6 +77,7 @@ namespace JocRobot
                 {
                     direccio = DireccioRobot.Up;
                     height -= 20;
+
                 }
                 else if (randomMov2 == 2)
                 {
