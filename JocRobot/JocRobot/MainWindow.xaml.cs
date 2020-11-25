@@ -84,12 +84,17 @@ namespace JocRobot
 
             //Segons la direccio que li toca augmenta o disminueix.
             if (direccio == DireccioRobot.Up)
+            {
                 height -= 10;
+            }
             if (direccio == DireccioRobot.Left)
+            {
                 width -= 10;
+            }
             if (direccio == DireccioRobot.Right)
+            {
                 width += 10;
-            
+            }
 
             //Si el que hi ha a la pantalla es una ellipse l'elimina per retorna a "Pintar" la ellipse.
             for (int i = 0; i < pantallaJoc.Children.Count; i++)

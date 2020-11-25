@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -13,11 +14,13 @@ namespace JocRobot
     {
         public double x, y;
         public Ellipse robot = new Ellipse();
+
         public Robot(double x , double y)
         {
             this.x = x;
             this.y = y;
         }
+
         public void posicioRobot()
         {
             robot.Width = robot.Height = 50;
