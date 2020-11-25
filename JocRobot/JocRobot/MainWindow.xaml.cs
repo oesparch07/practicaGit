@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,8 +28,13 @@ namespace JocRobot
         Random random = new Random();
         double width = 100;
         double height = 100;
+
         private Direccio direccio;
         int numMovs = 0;
+        int count = 0;
+        private object threadSleep;
+
+        public Direccio Direccio1 { get => direccio; set => direccio = value; }
 
         public MainWindow()
         {
@@ -39,8 +45,7 @@ namespace JocRobot
             capRobot.Add(new Robot(width, height));
             tresor.Add(new Tresor(random.Next(0, 37) * 10, random.Next(0, 35) * 10));
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            
-            direccio = Direccio.Down;
+
             timer.Tick += Timer_Tick;
         }
 
@@ -53,43 +58,45 @@ namespace JocRobot
 
         public void afeguirRobot()
         {
-            capRobot[0].posicioRobot();
-            pantallaJoc.Children.Insert(0, capRobot[0].robot);
+            foreach (Robot robot in capRobot)
+            {
+                robot.posicioRobot();
+                pantallaJoc.Children.Add(robot.robot);
+            }
+        }
+
+        public void moure()
+        {
+            //Segons la direccio que li toca augmenta o disminueix.
+            if (direccio == Direccio.Up)
+                height -= 10;
+            if (direccio == Direccio.Left)
+                width -= 10;
+            if (direccio == Direccio.Right)
+                width += 10;
+
+            //Si el que hi ha a la pantalla es una ellipse l'elimina per retorna a "Pintar" la ellipse.
+            for (int i = 0; i < pantallaJoc.Children.Count; i++)
+            {
+                if (pantallaJoc.Children[i] is Ellipse)
+                    count++;
+            }
+            pantallaJoc.Children.RemoveRange(1, count);
+            count = 0;
+            afeguirRobot();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-           
-            if (direccio == Direccio.Right)
-            {
-                capRobot[0].x += 10;
-                numMovs++;
-                txtNumMovs.Text = $"N moviments: {numMovs}";
+            //Cridem el mètode moure pq el robot es mogui.
+            moure();
 
-            }
-            else if (direccio == Direccio.Left)
-            {
-                capRobot[0].x -= 10;
-                numMovs++;
-                txtNumMovs.Text = $"N moviments: {numMovs}";
-            }
-            else if (direccio == Direccio.Up)
-            {
-                capRobot[0].y -= 10;
-                numMovs++;
-                txtNumMovs.Text = $"N moviments: {numMovs}";
-            }
-            else if (direccio == Direccio.Down)
-            {
-                capRobot[0].y += 10;
-                numMovs++;
-                txtNumMovs.Text = $"N moviments: {numMovs}";
-            }
-
+            //Va imprimint el robot.
             capRobot[0] = new Robot(width, height);
             //Si el robot colisiona amb el tresor el joc acaba.
             if (capRobot[0].x == tresor[0].x && capRobot[0].y == tresor[0].y)
             {
+                Thread.Sleep(2000);
                 this.Close();
             }
         }
@@ -97,7 +104,6 @@ namespace JocRobot
         public enum Direccio
         {
             Up,
-            Down,
             Right,
             Left
         }
