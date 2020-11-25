@@ -67,33 +67,42 @@ namespace JocRobot
 
         public void moure()
         {
-            int randomMov = random.Next(0, 4);
+            int randomMov = random.Next(0, 4);//Ens dira en quina direcció es coloca el robot.
+            int randomMov2 = random.Next(0, 5);//Ens dira si es moura o no el robot.
 
             if (randomMov == 0 || randomMov == 1)
             {
-                direccio = DireccioRobot.Up;
+                Thread.Sleep(500);
+                if (randomMov2 == 0 || randomMov2 == 1)
+                {
+                    direccio = DireccioRobot.Up;
+                    height -= 20;
+                }
+                else if (randomMov2 == 2)
+                {
+                    direccio = DireccioRobot.Left;
+                    width -= 20;
+                }
+                else if (randomMov2 == 3)
+                {
+                    direccio = DireccioRobot.Right;
+                    width += 20;
+                }
+                else if (randomMov2 == 4)
+                {
+                    direccio = DireccioRobot.Down;
+                    height += 20;
+                }
+                Thread.Sleep(500);
             }
+
             else if (randomMov == 2)
             {
                 direccio = DireccioRobot.Left;
             }
-            else
+            else if (randomMov == 3)
             {
                 direccio = DireccioRobot.Right;
-            }
-
-            //Segons la direccio que li toca augmenta o disminueix.
-            if (direccio == DireccioRobot.Up)
-            {
-                height -= 10;
-            }
-            if (direccio == DireccioRobot.Left)
-            {
-                width -= 10;
-            }
-            if (direccio == DireccioRobot.Right)
-            {
-                width += 10;
             }
 
             //Si el que hi ha a la pantalla es una ellipse l'elimina per retorna a "Pintar" la ellipse.
@@ -127,6 +136,7 @@ namespace JocRobot
         public enum DireccioRobot
         {
             Up,
+            Down,
             Right,
             Left
         }
