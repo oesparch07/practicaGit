@@ -77,22 +77,26 @@ namespace JocRobot
                 {
                     direccio = DireccioRobot.Up;
                     height -= 20;
+                    numMovs++;
 
                 }
                 else if (randomMov2 == 2)
                 {
                     direccio = DireccioRobot.Left;
                     width -= 20;
+                    numMovs++;
                 }
                 else if (randomMov2 == 3)
                 {
                     direccio = DireccioRobot.Right;
                     width += 20;
+                    numMovs++;
                 }
                 else if (randomMov2 == 4)
                 {
                     direccio = DireccioRobot.Down;
                     height += 20;
+                    numMovs++;
                 }
                 Thread.Sleep(500);
             }
@@ -128,6 +132,7 @@ namespace JocRobot
             //Si el robot colisiona amb el tresor el joc acaba.
             if (capRobot[0].x == tresor[0].x && capRobot[0].y == tresor[0].y)
             {
+                txtNumMovs.Text = "Total de moviments realitzats: " + numMovs;
                 Thread.Sleep(2000);
                 this.Close();
             }
